@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import StandardLayout from "./layout/StandardLayout";
-import Details from "./routes/Details";
-import Titles from "./routes/Titles";
+import Details from "./routes/DetailsPage";
+import Titles from "./routes/TitlesPage";
 
 function App() {
   return (
