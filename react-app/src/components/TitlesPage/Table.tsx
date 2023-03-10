@@ -5,6 +5,7 @@ import SortOrder from "../../types/SortOrder";
 import { Title } from "../../types/Title";
 import { ReactComponent as ArrowUp } from '@material-design-icons/svg/filled/arrow_upward.svg';
 import { ReactComponent as ArrowDown } from '@material-design-icons/svg/filled/arrow_downward.svg';
+import Pagination from "./Pagination";
 
 interface TableProps {
     data: Title[],
@@ -16,16 +17,21 @@ function Table({
     onDataRowClick
 }: TableProps) {
     // State
-    const [sortedItems, setSortedItems] = useState<Title[]>([]);
+    const [titlesToDisplay, setTitlesToDisplay] = useState<Title[]>([]);
+    const [titles, setTitles] = useState<Title[]>([]);
     const [sortObject, setSortObject] = useState<SortObject | null>();
 
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [titlesPerPage, setTitlesPerPage] = useState<number>(5);
+
     // Events
-    /** Watch for a change in the initial data passed into the component and update the sortItems state when change detected */
+    /** Watch for a change in the data parameter, when a change is detected update the titles state and do the initial pagination to set the titlesToDisplay */
     useEffect(() => {
-        setSortedItems(data);
+        setTitles(data);
+        updatePaginationForTitles([...data]);
     }, [data]);
 
-    /** Watches for any change in the SortObject state and executes the actual sorting when it detects a change  */
+    /** Watches for any change in the SortObject state, when a change it detected it executes the actual sorting functionality  */
     useEffect(() => {
         let sortedTitles = [...data];
 
@@ -56,10 +62,26 @@ function Table({
             }
         }
 
-        setSortedItems(sortedTitles);
+        // Update the titles state, do the pagination for the newly sorted list and reset the current page back to the first page
+        setTitles(sortedTitles);
+        updatePaginationForTitles(sortedTitles);
+        setCurrentPage(1);
     }, [sortObject]);
 
-    /** Click event to handle the sorting of a column. It creates a new sortObject (comprised of the column to sort and the order/direction) */
+    /** Watch for a change with the currentPage state, when changed it will update the pagination for the titles state */
+    useEffect(() => {
+        updatePaginationForTitles(titles);
+    }, [currentPage]);
+
+    /** Performs the functionality of the pagination on the titles passed in and then updates the titlesToDisplay */
+    const updatePaginationForTitles = (titles: Title[]) => {
+        const indexOfLastTitle = currentPage * titlesPerPage;
+        const indexOfFirstTitle = indexOfLastTitle - titlesPerPage;
+        const displayTitles = [...titles].splice(indexOfFirstTitle, titlesPerPage);
+        setTitlesToDisplay(displayTitles);
+    }
+
+    /** Handles the sorting of a column on table header cell click, it creates a new sortObject (comprised of the column to sort and the order/direction) */
     const onSortColumnClick = (sortByColumn: TableColumn) => {
         let order: SortOrder = "ASC";
 
@@ -75,8 +97,18 @@ function Table({
         setSortObject(newSortObject);
     }
 
+    /** Handles the on next page button click for the pagination */
+    const onNextPageClick = () => {
+        setCurrentPage((nextPage) => nextPage + 1);
+    };
+
+    /** Handles the on previus page button click for the pagination */
+    const onPreviousPageClick = () => {
+        setCurrentPage((prevPage) => prevPage - 1);
+    };
+
     return (
-        <>
+        <div>
             <table>
                 <thead>
                     <tr>
@@ -105,7 +137,7 @@ function Table({
                     </tr>
                 </thead>
                 <tbody>
-                    {sortedItems.map((title) => {
+                    {titlesToDisplay.map((title) => {
                         return (
                             <tr key={title.titleNumber} onClick={() => onDataRowClick(title.titleNumber)}>
                                 <td>{title.titleNumber}</td>
@@ -115,7 +147,9 @@ function Table({
                     })}
                 </tbody>
             </table>
-        </>
+
+            <Pagination totalTitles={titles.length} titlesPerPage={titlesPerPage} currentPage={currentPage} handlePrevPageClick={onPreviousPageClick} handleNextPageClick={onNextPageClick} />
+        </div>
     );
 }
 
