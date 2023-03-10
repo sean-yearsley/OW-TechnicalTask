@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchSpecificTitleDetails } from "../api/fetchApi";
+import Map from "../components/DetailsPage/map";
 import { Title } from "../types/Title";
 
 function DetailsPage() {
@@ -8,19 +9,19 @@ function DetailsPage() {
   const { titleNumber } = useParams();
 
   // State
-  const [title, setTitle] = useState<Title>();
+  const [specificTitle, setSpecificTitle] = useState<Title>();
 
   // Events
   useEffect(() => {
-    getSpecificTitleDetails();
+    getSpecificTitle();
   }, []);
 
   /** Gets the specific title from the API via the fetchApi function */
-  const getSpecificTitleDetails = async () => {
+  const getSpecificTitle = async () => {
     if (titleNumber != undefined) {
       await fetchSpecificTitleDetails(titleNumber)
         .then(data => {
-          setTitle(data);
+          setSpecificTitle(data);
         })
         .catch(err => {
           console.log("Error");
@@ -40,6 +41,10 @@ function DetailsPage() {
       <button type="button" onClick={backToTitlesPage}>
         Back
       </button>
+
+      {specificTitle && (
+        <Map x={specificTitle.x} y={specificTitle.y} propertyAddress={specificTitle.propertyAddress}/>
+      )}
     </>
   );
 }
