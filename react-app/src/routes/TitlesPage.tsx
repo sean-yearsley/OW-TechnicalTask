@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchAllTitles } from "../api/fetchApi";
+import Table from "../components/TitlesPage/Table";
 import { Title } from "../types/Title";
 
 function TitlesPage() {
   const navigate = useNavigate();
 
   // State
-  const [titles, setTitles] = useState<Title | Title[]>([]);
+  const [titles, setTitles] = useState<Title[]>([]);
 
   // Events
   useEffect(() => {
@@ -34,13 +35,7 @@ function TitlesPage() {
     <>
       <h1>Titles Page</h1>
 
-      <button type="button" onClick={() => goToDetailsPage('243751')}>
-        243751
-      </button>
-      <br /><br />
-      <button type="button" onClick={() => goToDetailsPage('LN78969')}>
-        LN78969
-      </button>
+      <Table data={titles} onDataRowClick={goToDetailsPage} />
     </>
   );
 }
