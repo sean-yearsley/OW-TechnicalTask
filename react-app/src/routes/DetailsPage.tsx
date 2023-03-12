@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchSpecificTitleDetails } from "../api/fetchApi";
 import OpenStreetMap from "../components/DetailsPage/OpenStreetMap";
-import TenureBadge from "../components/DetailsPage/TenureBadge";
+import Badge from "../components/Shared/Badge";
 import Button from "../components/Shared/Button";
 import ErrorMessage from "../components/Shared/ErrorMessage";
 import { Title } from "../types/Title";
@@ -57,7 +57,7 @@ function DetailsPage() {
               <div className="flex flex-col space-x-0 mt-4 md:flex-row md:space-x-8">
                 <div className="w-72">
                   <div>
-                    <h2 className="text-2xl">{specificTitle.titleNumber} <TenureBadge text={specificTitle.tenure} /></h2>
+                    <h2 className="text-2xl">{specificTitle.titleNumber} <Badge text={specificTitle.tenure} /></h2>
                   </div>
                   <div className="mt-2">
                     {specificTitle.propertyAddress}

@@ -5,7 +5,7 @@ import SortOrder from "../../types/SortOrder";
 import { Title } from "../../types/Title";
 import { ReactComponent as ArrowUp } from '@material-design-icons/svg/filled/arrow_upward.svg';
 import { ReactComponent as ArrowDown } from '@material-design-icons/svg/filled/arrow_downward.svg';
-import Pagination from "./Pagination";
+import Pagination from "../Shared/Pagination";
 
 interface TableProps {
     data: Title[],
@@ -16,13 +16,14 @@ function Table({
     data,
     onDataRowClick
 }: TableProps) {
+    const titlesPerPage = 5;
+
     // State
     const [titlesToDisplay, setTitlesToDisplay] = useState<Title[]>([]);
     const [titles, setTitles] = useState<Title[]>([]);
     const [sortObject, setSortObject] = useState<SortObject | null>();
 
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [titlesPerPage, setTitlesPerPage] = useState<number>(5);
 
     // Events
     /** Watch for a change in the data parameter, when a change is detected update the titles state and do the initial pagination to set the titlesToDisplay */
@@ -148,7 +149,7 @@ function Table({
                 </tbody>
             </table>
 
-            <Pagination totalTitles={titles.length} titlesPerPage={titlesPerPage} currentPage={currentPage} handlePrevPageClick={onPreviousPageClick} handleNextPageClick={onNextPageClick} />
+            <Pagination totalItems={titles.length} itemsPerPage={titlesPerPage} currentPage={currentPage} handlePrevPageClick={onPreviousPageClick} handleNextPageClick={onNextPageClick} />
         </div>
     );
 }
