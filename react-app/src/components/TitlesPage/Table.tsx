@@ -3,9 +3,8 @@ import TableColumn from "../../types/TableColumn";
 import { SortObject } from "../../types/SortObject";
 import SortOrder from "../../types/SortOrder";
 import { Title } from "../../types/Title";
-import { ReactComponent as ArrowUp } from '@material-design-icons/svg/filled/arrow_upward.svg';
-import { ReactComponent as ArrowDown } from '@material-design-icons/svg/filled/arrow_downward.svg';
 import Pagination from "../Shared/Pagination";
+import SortIcon from "../Shared/SortIcon";
 
 interface TableProps {
     data: Title[],
@@ -21,7 +20,7 @@ function Table({
     // State
     const [titlesToDisplay, setTitlesToDisplay] = useState<Title[]>([]);
     const [titles, setTitles] = useState<Title[]>([]);
-    const [sortObject, setSortObject] = useState<SortObject | null>();
+    const [sortObject, setSortObject] = useState<SortObject>();
 
     const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -115,25 +114,11 @@ function Table({
                     <tr>
                         <th className="font-bold p-2 border-b border-slate-500 text-left bg-[#006A87] text-white hover:cursor-pointer" onClick={() => onSortColumnClick("TITLE")}>
                             Title Number
-                            {/* Icon for title ascending */}
-                            {sortObject && sortObject.column === "TITLE" && sortObject.order === "ASC" && (
-                                <ArrowUp className="inline ml-1" style={{fill: '#fff'}} width={18} height={18} />
-                            )}
-                            {/* Icon for title descending */}
-                            {sortObject && sortObject.column === "TITLE" && sortObject.order === "DESC" && (
-                                <ArrowDown className="inline ml-1" style={{fill: '#fff'}} width={18} height={18} />
-                            )}
+                            <SortIcon columnName="TITLE" sortObject={sortObject} />
                         </th>
                         <th className="font-bold p-2 border-b border-slate-500 text-left bg-[#006A87] text-white hover:cursor-pointer" onClick={() => onSortColumnClick("TENURE")}>
                             Class of Title
-                            {/* Icon for tenure ascending */}
-                            {sortObject && sortObject.column === "TENURE" && sortObject.order === "ASC" && (
-                                <ArrowUp className="inline ml-1" style={{fill: '#fff'}} width={18} height={18} />
-                            )}
-                            {/* Icon for tenure descending */}
-                            {sortObject && sortObject.column === "TENURE" && sortObject.order === "DESC" && (
-                                <ArrowDown className="inline ml-1" style={{fill: '#fff'}} width={18} height={18} />
-                            )}
+                            <SortIcon columnName="TENURE" sortObject={sortObject} />
                         </th>
                     </tr>
                 </thead>
