@@ -1,16 +1,16 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
-interface MapProps {
+interface OpenStreetMapProps {
     x: number;
     y: number;
     propertyAddress: string;
 }
 
-function Map({
+function OpenStreetMap({
     x,
     y,
     propertyAddress
-}: MapProps) {
+}: OpenStreetMapProps) {
     return (
         <>
             <MapContainer center={[y, x]} zoom={17} scrollWheelZoom={true}>
@@ -28,4 +28,4 @@ function Map({
     );
 }
 
-export default Map;
+export default OpenStreetMap;
