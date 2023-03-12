@@ -18,7 +18,7 @@ function Pagination({
     const totalPages = Math.ceil(totalTitles / titlesPerPage);
     return (
         <div className="w-full flex pt-4">
-            <div className="text-left w-1/2 md:w-1/3">
+            <div data-testid="btn-prev" className="text-left w-1/2 md:w-1/3">
                 <Button text="Previous" onClickHandler={handlePrevPageClick} disabled={currentPage === 1} />
             </div>
 
@@ -26,7 +26,7 @@ function Pagination({
                 Page {currentPage} of {totalPages}
             </div>
 
-            <div className="text-right w-1/2 md:w-1/3">
+            <div data-testid="btn-next"className="text-right w-1/2 md:w-1/3">
                 <Button text="Next" onClickHandler={handleNextPageClick} disabled={currentPage === totalPages} />
             </div>
         </div>
