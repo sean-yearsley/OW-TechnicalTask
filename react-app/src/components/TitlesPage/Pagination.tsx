@@ -1,3 +1,5 @@
+import Button from "../Shared/Button";
+
 interface PaginationProps {
     currentPage: number;
     totalTitles: number;
@@ -15,21 +17,19 @@ function Pagination({
 }: PaginationProps) {
     const totalPages = Math.ceil(totalTitles / titlesPerPage);
     return (
-        <>
-            <div>
-                <button onClick={() => handlePrevPageClick()} disabled={currentPage === 1}>
-                    Previous
-                </button>
-
-                <span>
-                    Page {currentPage} of {totalPages}
-                </span>
-
-                <button onClick={() => handleNextPageClick()} disabled={currentPage === totalPages}>
-                    Next
-                </button>
+        <div className="w-full flex pt-4">
+            <div className="text-left w-1/2 md:w-1/3">
+                <Button text="Previous" onClickHandler={handlePrevPageClick} disabled={currentPage === 1} />
             </div>
-        </>
+
+            <div className="text-center w-1/3 hidden md:block">
+                Page {currentPage} of {totalPages}
+            </div>
+
+            <div className="text-right w-1/2 md:w-1/3">
+                <Button text="Next" onClickHandler={handleNextPageClick} disabled={currentPage === totalPages} />
+            </div>
+        </div>
     );
 }
 

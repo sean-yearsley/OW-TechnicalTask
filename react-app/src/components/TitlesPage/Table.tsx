@@ -109,29 +109,29 @@ function Table({
 
     return (
         <div>
-            <table>
-                <thead>
+            <table className="table-fixed border w-full">
+                <thead className="border border-slate-500">
                     <tr>
-                        <th onClick={() => onSortColumnClick("TITLE")}>
+                        <th className="font-bold p-2 border-b border-slate-500 text-left bg-[#006A87] text-white hover:cursor-pointer" onClick={() => onSortColumnClick("TITLE")}>
                             Title Number
                             {/* Icon for title ascending */}
                             {sortObject && sortObject.column === "TITLE" && sortObject.order === "ASC" && (
-                                <ArrowUp width={14} height={14} />
+                                <ArrowUp className="inline ml-1" style={{fill: '#fff'}} width={18} height={18} />
                             )}
                             {/* Icon for title descending */}
                             {sortObject && sortObject.column === "TITLE" && sortObject.order === "DESC" && (
-                                <ArrowDown width={14} height={14} />
+                                <ArrowDown className="inline ml-1" style={{fill: '#fff'}} width={18} height={18} />
                             )}
                         </th>
-                        <th onClick={() => onSortColumnClick("TENURE")}>
+                        <th className="font-bold p-2 border-b border-slate-500 text-left bg-[#006A87] text-white hover:cursor-pointer" onClick={() => onSortColumnClick("TENURE")}>
                             Class of Title
                             {/* Icon for tenure ascending */}
                             {sortObject && sortObject.column === "TENURE" && sortObject.order === "ASC" && (
-                                <ArrowUp width={14} height={14} />
+                                <ArrowUp className="inline ml-1" style={{fill: '#fff'}} width={18} height={18} />
                             )}
                             {/* Icon for tenure descending */}
                             {sortObject && sortObject.column === "TENURE" && sortObject.order === "DESC" && (
-                                <ArrowDown width={14} height={14} />
+                                <ArrowDown className="inline ml-1" style={{fill: '#fff'}} width={18} height={18} />
                             )}
                         </th>
                     </tr>
@@ -139,9 +139,9 @@ function Table({
                 <tbody>
                     {titlesToDisplay.map((title) => {
                         return (
-                            <tr key={title.titleNumber} onClick={() => onDataRowClick(title.titleNumber)}>
-                                <td>{title.titleNumber}</td>
-                                <td>{title.tenure}</td>
+                            <tr className="odd:bg-slate-100 hover:bg-slate-300 hover:cursor-pointer" key={title.titleNumber} onClick={() => onDataRowClick(title.titleNumber)}>
+                                <td className="p-2 border-b text-left">{title.titleNumber}</td>
+                                <td className="p-2 border-b text-left">{title.tenure}</td>
                             </tr>
                         )
                     })}

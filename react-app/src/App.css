@@ -38,7 +38,15 @@
 }
 
 .leaflet-container {
-  width: 50vh;
-  height: 50vh;
+  width: 22rem;
+  height: 22rem;
   z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .leaflet-container {
+    width: 18rem;
+    height: 18rem;
+    z-index: 1;
+  }
 }
